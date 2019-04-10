@@ -4,11 +4,16 @@
 #include <pthread.h>
 
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,"JNI",__VA_ARGS__);
+//C++中使用C代码需要这样声明，防止编译器将C中方法名编译后认不出了
+extern "C"{
+    extern int test();
+}
 
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_wanglei55_ndk_MainActivity_stringFromJNI(JNIEnv *env,jobject /* this */) {
 
+    LOGE("libTest.so动态库中test()方法返回值为：%d", test());
     std::string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());
 }

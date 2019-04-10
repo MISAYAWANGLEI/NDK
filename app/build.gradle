@@ -11,9 +11,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                //指导我们自己编写的c/c++生成动态库时生成几种架构的库
+                abiFilters "armeabi-v7a"
             }
         }
+
+        // 应该打包几种cpu
+        //比如： 集成了第三方库 ，第三方库中提供了 arm的 提供了 x86的
+        // 可以在此处 指导 只打包 arm
+        // 生成出来的apk 就只会包含 arm的
+        ndk{
+            abiFilters "armeabi-v7a"
+        }
+
     }
     buildTypes {
         release {
@@ -22,7 +32,7 @@ android {
         }
     }
     externalNativeBuild {
-        cmake {
+        cmake {//从build.gradle所在目录开始查找
             path "CMakeLists.txt"
         }
     }
