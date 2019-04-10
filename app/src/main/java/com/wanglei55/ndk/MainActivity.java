@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "JNI";
 
     static {
+        System.loadLibrary("Test");
         System.loadLibrary("native-lib");
     }
 

@@ -4,9 +4,10 @@
 #include <pthread.h>
 
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,"JNI",__VA_ARGS__);
-//C++中使用C代码需要这样声明，防止编译器将C中方法名编译后认不出了
+//C++中使用C代码需要这样声明，防止C++编译器将C中方法名编译后认不出了
 extern "C"{
     extern int test();
+    extern int staticTest();
 }
 
 extern "C"
@@ -14,8 +15,14 @@ JNIEXPORT jstring JNICALL
 Java_com_wanglei55_ndk_MainActivity_stringFromJNI(JNIEnv *env,jobject /* this */) {
 
     LOGE("libTest.so动态库中test()方法返回值为：%d", test());
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    LOGE("libStaticTest.a静态库中staticTest()方法返回值为：%d", staticTest());
+    int i = test();
+    int j = staticTest();
+    std::string s1 = std::to_string(i);
+    std::string s2 = std::to_string(j);
+    //std::string s2 = "Hello from C++";
+    std::string s = s1 +":::"+s2;
+    return env->NewStringUTF(s.c_str());
 }
 extern "C"
 JNIEXPORT jint JNICALL
