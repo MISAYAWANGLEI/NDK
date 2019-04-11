@@ -26,7 +26,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${CMAKE_SOURCE_DIR}/src/main/jniLibs/a
 #find_library( # Sets the name of the path variable.
 #              log-lib
 #              log )
-
+#生成native-lib动态库需要用到Test StaticTest log动态或者静态库
 target_link_libraries( # Specifies the target library.
                        native-lib
                        # libTest.so 可以去掉lib与.so
